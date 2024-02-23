@@ -6,13 +6,13 @@
 #define UNTITLED_TREE_H
 
 
-#include "node.h"
+#include "Node.h"
 
-class tree {
+class Tree {
 public:
-    node * root;
-    explicit tree(node *);
-    void inOrder(node *);
+    Node * root;
+    explicit Tree(Node *);
+    void inOrder(Node *);
     void inOrder();
 };
 

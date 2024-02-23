@@ -1,38 +1,32 @@
-//
-// Created by madan on 10/30/2023.
-//
-
-#include "node.h"
-vector<node*> node::nodes;
-node::node(node * parent, int id, int coreNumber) {
+#include "Node.h"
+std::vector<Node*> Node::Nodes;
+Node::Node(Node * parent, int id, int coreNumber) {
     this->parent= parent;
     this->id= id;
     this->coreNumber=coreNumber;
     if(parent!= nullptr){
         parent->addChild(this);
     }
-    //nodes.push_back(this);
     this->vertexNumber=-1;
 }
-node::node(node * parent, int id, int coreNumber, int vertexNumber) {
+
+Node::Node(Node * parent, int id, int coreNumber, int vertexNumber) {
     this->parent= parent;
     this->id= id;
     this->coreNumber=coreNumber;
-
     if(parent!= nullptr){
         parent->addChild(this);
     }
-    nodes.push_back(this);
+    Nodes.push_back(this);
     this->vertexNumber=vertexNumber;
     createParentList(this);
 }
-void node::addChild(node * child) {
+
+void Node::addChild(Node * child) {
     this->children.push_back(child);
 }
 
-
-
-void node::createParentList(node *  currentNode) {
+void Node::createParentList(Node *  currentNode) {
     if (currentNode==nullptr){
         return;
     }

@@ -1,12 +1,9 @@
-//
-// Created by madan on 10/14/2023.
-//
-
 #include <vector>
 #include<iostream>
+#include <climits>
 #include "Graph.h"
-#include "node.h"
-#include "tree.h"
+#include "Node.h"
+#include "Tree.h"
 
 using namespace std;
 Graph::Graph(int n)
@@ -37,10 +34,7 @@ void Graph::DFS(int u, int component, int k, int degrees[], int components[], bo
 }
 
 
-
-
 void Graph::coreDecomposition() {
-    int * kir= new int[10000000];
     int maxDegree=INT_MIN;
     bool* inCore=new bool[n];
     fill_n(inCore, n, false);
@@ -54,7 +48,7 @@ void Graph::coreDecomposition() {
         }
     }
 
-    vector<node *> lastLevelNodes;
+    vector<Node *> lastLevelNodes;
     vector<vector<int>> lastLevelVertices;
     int id=1;
 
@@ -63,7 +57,7 @@ void Graph::coreDecomposition() {
     cout<<endl<<maxDegree<<endl;
     for(int k=1; k<=maxDegree; k++){
         cout<<k<<endl;
-        vector<node *> lastLevelNodesTemp;
+        vector<Node *> lastLevelNodesTemp;
         vector<vector<int>> lastLevelVerticesTemp;
         findKcores( k,  degrees);
 
@@ -82,25 +76,20 @@ void Graph::coreDecomposition() {
         if (coreInformation[n+ (k-1) * (n+1)]>maxComponentNumber){
             maxComponentNumber=coreInformation[n + (k-1) * (n+1)];
         }
-
-        for (int i = 0; i < n; i++) {
-            if(degrees[i]>=k) {
-              // cout <<  i  << "in component "<< components[i]<< endl;
-            }
-        }
     }
-    node* * coreComponentInfo=new node*[maxDegree*(maxComponentNumber+1)];
+
+    Node**coreComponentInfo=new Node*[maxDegree*(maxComponentNumber+1)];
     for (int i=0; i<maxDegree*(maxComponentNumber+1); i++){
         coreComponentInfo[i]= nullptr;
     }
-    static node* root=new node(nullptr, id,0);
+    static Node* root=new Node(nullptr, id,0);
     id++;
     for (int i=0; i<n;i++){
         for (int k=1; k<= maxDegree; k++){
             if(k==1){
                 int componentNumber=coreInformation[i + (k-1) * (n+1)];
                 if(componentNumber !=0 && coreComponentInfo [componentNumber + (k-1) * (maxComponentNumber+1)]== nullptr){
-                node* c= new node(root, id, k);
+                Node* c= new Node(root, id, k);
                 id++;
                 coreComponentInfo[componentNumber + (k-1) * (maxComponentNumber+1)]=c;
 
@@ -110,23 +99,16 @@ void Graph::coreDecomposition() {
                 int componentNumber=coreInformation[i + (k-1) * (n+1)];
                 if(componentNumber !=0 && coreComponentInfo [componentNumber + (k-1) * (maxComponentNumber+1)]== nullptr){
                     int componentLastCoreLevel=coreInformation[i + (k-2) * (n+1)];
-                    node* c= new node(coreComponentInfo[componentLastCoreLevel + (k-2) * (maxComponentNumber+1)], id, k);
+                    Node* c= new Node(coreComponentInfo[componentLastCoreLevel + (k-2) * (maxComponentNumber+1)], id, k);
                     id++;
                     coreComponentInfo[componentNumber + (k-1) * (maxComponentNumber+1)]=c;
                 }
             }
         }
     }
-    cout<<id;
-    for (int k=0; k<maxDegree; k++){
-      // cout<<"core number"<<k+1<<endl;
-        for (int i=1; i<= maxComponentNumber; i++){
-            if(coreComponentInfo[i + (k) * (maxComponentNumber+1)]!= nullptr){
-          // cout<< "component "<< i<< " in node"<<coreComponentInfo[i + (k) * (maxComponentNumber+1)]->id<<endl;
-            }
-        }
-// to do: delete pointers
-    }
+    
+    cout << id; //TODO: what's this?
+
     for (int i=0; i<n; i++){
         int coreness=1;
         int k=1;
@@ -138,17 +120,13 @@ void Graph::coreDecomposition() {
         }
 
         cout<<"coreness of vertex "<<i<<" is "<<coreness<<endl;
-        node* nodeVertex= new node(coreComponentInfo[coreInformation[i + (coreness-1) * (n+1)]], id, coreness, i);
+        Node* NodeVertex= new Node(coreComponentInfo[coreInformation[i + (coreness-1) * (n+1)]], id, coreness, i);
         id++;
     }
 
-    tree decompositionTree(root);
+    Tree decompositionTree(root);
     delete [] coreInformation;
     delete [] coreComponentInfo;
-    int A=1;
-    cin>>A;
-    cout<<"salam";
-    //decompositionTree.inOrder();
 }
 
 void Graph::findKcores(int k, int degrees[]) {
@@ -195,9 +173,6 @@ void Graph::findConnectedComponents(int k, int  degrees[], int components[]) {
             component++;
         }
     }
-
-
-
 }
 
 

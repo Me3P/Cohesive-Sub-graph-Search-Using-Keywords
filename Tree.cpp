@@ -2,27 +2,27 @@
 // Created by madan on 10/30/2023.
 //
 
-#include "tree.h"
+#include "Tree.h"
 
-void tree::inOrder(node* u) {
+void Tree::inOrder(Node* u) {
     if (u->children.size() !=0){
         for (auto const& v : u->children) {
             inOrder(v);
         }
     }
     if(u->vertexNumber!=-1){
-        cout<<"vertex "<<u->vertexNumber<<" with core number "<<u->coreNumber<<endl;
+        std::cout<<"vertex "<<u->vertexNumber<<" with core number "<<u->coreNumber<<std::endl;
     }
     else{
-    cout<<u->id<<endl;
+    std::cout<<u->id<<std::endl;
     }
 
 }
 
-tree::tree(node * root) {
+Tree::Tree(Node * root) {
     this-> root=root;
 }
 
-void tree::inOrder() {
+void Tree::inOrder() {
     inOrder(root);
 }
