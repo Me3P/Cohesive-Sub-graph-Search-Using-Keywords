@@ -1,12 +1,14 @@
+#include <vector>
+#include <iostream>
+#include <climits>
+
 #ifndef UNTITLED_GRAPH_H
 #define UNTITLED_GRAPH_H
 
-
-#include <list>
 class Graph {
 private:
     int n;
-    std::list<int> *adj; // the adjacency matrix
+    std::vector<std::vector<int>> adj; // the adjacency matrix
 public:
     Graph();
     Graph(int n);

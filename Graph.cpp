@@ -1,15 +1,14 @@
-#include <vector>
-#include<iostream>
-#include <climits>
 #include "Graph.h"
 #include "Node.h"
 #include "Tree.h"
+#include <vector>
+#include <iostream>
+#include <climits>
+#include <list>
 
-using namespace std;
 Graph::Graph(int n)
 {
     this->n = n;
-    adj = new list<int>[n];
 }
 
 void Graph::addEdge(int u, int v)
@@ -20,10 +19,9 @@ void Graph::addEdge(int u, int v)
 //a special DFS to find the connected k cores of a graphs, where every edge is traveresed iff both endpoints have core number
 // at least k
 void Graph::DFS(int u, int component, int k, int degrees[], int components[], bool visited[]){
-    if(visited[u]){
+    if(visited[u]) 
         return;
-    }
-
+        
     visited[u]=true;
     components[u]=component;
     for(auto it= adj[u].begin(); it != adj[u].end(); ++it ){
@@ -37,7 +35,7 @@ void Graph::DFS(int u, int component, int k, int degrees[], int components[], bo
 void Graph::coreDecomposition() {
     int maxDegree=INT_MIN;
     bool* inCore=new bool[n];
-    fill_n(inCore, n, false);
+    std::fill_n(inCore, n, false);
     int* degrees=new int[n];
 
     for (int i = 0; i < n; i++) {
@@ -48,21 +46,21 @@ void Graph::coreDecomposition() {
         }
     }
 
-    vector<Node *> lastLevelNodes;
-    vector<vector<int>> lastLevelVertices;
+    std::vector<Node *> lastLevelNodes;
+    std::vector<std::vector<int>> lastLevelVertices;
     int id=1;
 
     int* coreInformation=new int[maxDegree*(n+1)];
     int maxComponentNumber=INT_MIN;
-    cout<<endl<<maxDegree<<endl;
+    std::cout<<std::endl<<maxDegree<<std::endl;
     for(int k=1; k<=maxDegree; k++){
-        cout<<k<<endl;
-        vector<Node *> lastLevelNodesTemp;
-        vector<vector<int>> lastLevelVerticesTemp;
+        std::cout<<k<<std::endl;
+        std::vector<Node *> lastLevelNodesTemp;
+        std::vector<std::vector<int>> lastLevelVerticesTemp;
         findKcores( k,  degrees);
 
         int * components=new int[n];
-        fill_n(components, n, 0);
+        std::fill_n(components, n, 0);
         findConnectedComponents(k, degrees, components);
         int maximum=INT_MIN;
         for (int i=0; i<n; i++){
@@ -107,7 +105,7 @@ void Graph::coreDecomposition() {
         }
     }
     
-    cout << id; //TODO: what's this?
+    std::cout << id; //TODO: what's this?
 
     for (int i=0; i<n; i++){
         int coreness=1;
@@ -119,7 +117,7 @@ void Graph::coreDecomposition() {
             componentNumber= coreInformation[i + (k-1) * (n+1)];
         }
 
-        cout<<"coreness of vertex "<<i<<" is "<<coreness<<endl;
+        std::cout<<"coreness of vertex "<<i<<" is "<<coreness<<std::endl;
         Node* NodeVertex= new Node(coreComponentInfo[coreInformation[i + (coreness-1) * (n+1)]], id, coreness, i);
         id++;
     }
@@ -131,11 +129,11 @@ void Graph::coreDecomposition() {
 
 void Graph::findKcores(int k, int degrees[]) {
     // recursively find the vertices with degree less than k and deduct one from their degrees
-    list<int> candidates;
-    bool visited[n];
-    bool isACandidate[n];
-    fill_n(visited, n, false);
-    fill_n(isACandidate, n, false);
+    std::list<int> candidates;
+    bool visited[1000] ;
+    bool isACandidate[1000];
+    std::fill_n(visited, n, false);
+    std::fill_n(isACandidate, n, false);
     for (int i = 0; i < n; i++) {
         if(degrees[i]<k){
             candidates.push_back(i);
@@ -164,9 +162,9 @@ void Graph::findKcores(int k, int degrees[]) {
 void Graph::findConnectedComponents(int k, int  degrees[], int components[]) {
     // given an integer k, find the connected k-cores of the graph and put them in the degrees [] array
     int component=1;
-    fill_n(components, n, 0);
+    std::fill_n(components, n, 0);
     bool* visited=new bool[n];
-    fill_n(visited, n, false);
+    std::fill_n(visited, n, false);
     for (int i=0; i<n; i++){
         if (!visited[i] && degrees[i]>=k){
             DFS(i,component, k, degrees, components, visited);
