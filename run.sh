@@ -1,2 +1,4 @@
 #!/bin/bash
-gcc main.cpp -o2
+make clean
+make
+./output

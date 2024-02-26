@@ -33,20 +33,23 @@ Graph *readFile(std::string fileName){
     // reset the cursor the beginning of the file.
     file.clear();
     file.seekg(0);
-
+    
     Graph *g = new Graph(numberOfVertices);
-
+    
     while(!file.eof()){
         file >> from >> to;
         g->addEdge(from, to);
     }
+    
     file.close(); //close the file object.
     
     return g;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
     //dd_g138 dataset 102 vertices and 518 edges
+    // std::string filename = argv[0];
+    // std::cout<< "datasets/" + filename << std::endl;
     Graph *g = readFile("datasets/DD_g138.txt");
     g->coreDecomposition();
 }

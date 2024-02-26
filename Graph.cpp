@@ -9,6 +9,10 @@
 Graph::Graph(int n)
 {
     this->n = n;
+    for (int i = 0; i < n; i++){
+        std::vector<int> v;
+        this->adj.push_back(v);
+    }
 }
 
 void Graph::addEdge(int u, int v)
