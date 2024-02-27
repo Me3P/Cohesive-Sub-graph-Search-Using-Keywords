@@ -10,15 +10,15 @@
 
 class Node {
 public:
-    int id;
+    static int id;
     int coreNumber;
     int vertexNumber;
     Node* parent;
     std::vector<Node*>parents;
     std::vector<Node *> children;
     static std::vector<Node *> Nodes;
+    Node(Node *, int);
     Node(Node *, int, int);
-    Node(Node *, int, int, int);
 
     void addChild(Node *);
     void createParentList(Node*);

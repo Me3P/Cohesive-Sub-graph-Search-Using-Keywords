@@ -1,8 +1,9 @@
 #include "Node.h"
 std::vector<Node*> Node::Nodes;
-Node::Node(Node * parent, int id, int coreNumber) {
+int id = 0;
+Node::Node(Node * parent, int coreNumber) {
     this->parent= parent;
-    this->id= id;
+    this->id= this->id++;
     this->coreNumber=coreNumber;
     if(parent!= nullptr){
         parent->addChild(this);
@@ -10,9 +11,9 @@ Node::Node(Node * parent, int id, int coreNumber) {
     this->vertexNumber=-1;
 }
 
-Node::Node(Node * parent, int id, int coreNumber, int vertexNumber) {
+Node::Node(Node * parent, int coreNumber, int vertexNumber) {
     this->parent= parent;
-    this->id= id;
+    this->id= this->id++;
     this->coreNumber=coreNumber;
     if(parent!= nullptr){
         parent->addChild(this);

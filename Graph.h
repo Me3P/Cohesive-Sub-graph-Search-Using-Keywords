@@ -1,6 +1,7 @@
 #include <vector>
 #include <iostream>
 #include <climits>
+#include <map>
 
 #ifndef UNTITLED_GRAPH_H
 #define UNTITLED_GRAPH_H
@@ -8,16 +9,18 @@
 class Graph {
 private:
     int n;
-    std::vector<std::vector<int>> adj; // the adjacency matrix
+    std::map<int, std::vector<int>> adj; // the adjacency matrix
 public:
     Graph();
-    Graph(int n);
-    void addEdge(int u, int v);
-    void DFS(int , int , int k, int [], int [], bool []);
+    Graph(int);
+    void addEdge(int, int);
+    void deleteVertex(int);
+    void deleteEdge(int, int);
+    void DFS(int , int , int , int [], int [], bool []);
     void coreDecomposition();
     void findKcores(int, int[] );
     void findConnectedComponents( int , int [], int []);
-
+    Node* Graph::KCore(Graph &, int, int []);
     };
 
 

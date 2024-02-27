@@ -27,7 +27,7 @@ Graph *readFile(std::string fileName){
     
     while(!file.eof()){
         file >> from >> to;
-        numberOfVertices = std::max(numberOfVertices, std::max(from, to));
+        numberOfVertices = std::max(numberOfVertices, std::max(from, to)+1);
     }
     
     // reset the cursor the beginning of the file.
@@ -50,6 +50,7 @@ int main(int argc, char *argv[]) {
     //dd_g138 dataset 102 vertices and 518 edges
     // std::string filename = argv[0];
     // std::cout<< "datasets/" + filename << std::endl;
-    Graph *g = readFile("datasets/DD_g138.txt");
+    Graph *g = readFile("datasets/144.txt");
+    std::cout<< "Graph created \n";
     g->coreDecomposition();
 }
