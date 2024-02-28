@@ -24,5 +24,4 @@ public:
     Node* KCore(Graph &, int, int []);
     };
 
-
 #endif //UNTITLED_GRAPH_H
