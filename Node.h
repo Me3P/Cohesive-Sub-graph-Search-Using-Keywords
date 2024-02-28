@@ -10,7 +10,6 @@
 
 class Node {
 public:
-    static int id;
     int coreNumber;
     int vertexNumber;
     Node* parent;

@@ -208,7 +208,7 @@ Node* Graph::KCore(Graph &g, int k, int degrees[]){
         }
     }
     k++;
-
+return root;
 }
 
 void Graph::deleteVertex(int u){

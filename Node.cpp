@@ -3,7 +3,6 @@ std::vector<Node*> Node::Nodes;
 int id = 0;
 Node::Node(Node * parent, int coreNumber) {
     this->parent= parent;
-    this->id= this->id++;
     this->coreNumber=coreNumber;
     if(parent!= nullptr){
         parent->addChild(this);
@@ -13,7 +12,6 @@ Node::Node(Node * parent, int coreNumber) {
 
 Node::Node(Node * parent, int coreNumber, int vertexNumber) {
     this->parent= parent;
-    this->id= this->id++;
     this->coreNumber=coreNumber;
     if(parent!= nullptr){
         parent->addChild(this);
