@@ -79,7 +79,7 @@ void Graph::coreDecomposition() {
         maxComponentNumber=std::max(maxComponentNumber, coreInformation[k-1][n]);
     }
 
-    Node** coreComponentInfo = new Node*[maxDegree*(maxComponentNumber+1)];
+    Node*** coreComponentInfo = new Node** [maxDegree*(maxComponentNumber+1)];
     for (int i=0; i<maxDegree*(maxComponentNumber+1); i++){
         coreComponentInfo[i]= nullptr;
     }
@@ -89,10 +89,10 @@ void Graph::coreDecomposition() {
         for (int k = 1; k <= maxDegree; k++){
             if(k == 1){
                 int componentNumber=coreInformation[k-1][i];
-                if(componentNumber !=0 && coreComponentInfo [componentNumber + (k-1) * (maxComponentNumber+1)]== nullptr){
+                if(componentNumber !=0 && coreComponentInfo [k-1][componentNumber]== nullptr){
                 Node* c= new Node(root, id, k);
                 id++;
-                coreComponentInfo[componentNumber + (k-1) * (maxComponentNumber+1)]=c;
+                coreComponentInfo[k-1][componentNumber]=c;
 
                 }
             }
@@ -100,9 +100,9 @@ void Graph::coreDecomposition() {
                 int componentNumber=coreInformation[k-1][i];
                 if(componentNumber !=0 && coreComponentInfo [componentNumber + (k-1) * (maxComponentNumber+1)]== nullptr){
                     int componentLastCoreLevel=coreInformation[k-2][i];
-                    Node* c= new Node(coreComponentInfo[componentLastCoreLevel + (k-2) * (maxComponentNumber+1)], id, k);
+                    Node* c= new Node(coreComponentInfo[k-2][componentLastCoreLevel], id, k);
                     id++;
-                    coreComponentInfo[componentNumber + (k-1) * (maxComponentNumber+1)]=c;
+                    coreComponentInfo[componentNumber + (k-1) * (maxComponentNumber+1)]=&c;
                 }
             }
         }
@@ -119,7 +119,7 @@ void Graph::coreDecomposition() {
         }
 
         std::cout<<"coreness of vertex "<<i<<" is "<<coreness<<std::endl;
-        Node* NodeVertex= new Node(coreComponentInfo[coreInformation[coreness-1][i]], coreness, i);
+        Node* NodeVertex= new Node(coreComponentInfo[coreness-1][coreInformation[coreness-1][i]], coreness, i);
     }
 
     Tree decompositionTree(root);
