@@ -3,6 +3,7 @@
 #include <climits>
 #include <map>
 #include "Node.h"
+#include "Tree.h"
 
 #ifndef UNTITLED_GRAPH_H
 #define UNTITLED_GRAPH_H
@@ -20,8 +21,12 @@ public:
     void DFS(int , int , int , int [], int [], bool []);
     void coreDecomposition();
     void findKcores(int, int[] );
-    void findConnectedComponents( int , int [], int []);
+    void findConnectedComponents(int , int [], int []);
+    int findKcores(int, Node**);
     Node* KCore(Graph &, int, int []);
+    Tree* coreDecomposition2();
+    void findConnectedComponents(int k, Node** nodeContainingVertex);
+    void DFS(int u, int k, Node** nodeContainingVertex, Node* componentNode, bool visited[]);
     };
 
 

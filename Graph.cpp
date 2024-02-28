@@ -6,6 +6,7 @@
 #include <climits>
 #include <list>
 #include <queue>
+#include<algorithm>
 
 Graph::Graph(int n)
 {
@@ -218,6 +219,86 @@ void Graph::deleteVertex(int u){
 void Graph::deleteEdge(int u, int v){ // TODO fix  this function
     // std::vector<int> &vec = adj.find(u)->second;
     // vec.erase(std::find(vec.begin(), vec.end(), v));
+}
+Tree* Graph::coreDecomposition2() {
+    int numRemainingVertices=n; // to denote how many vertices are left
+    Node** nodeContainingVertex=new Node* [n]; // to track the nodes of the last level of the
+    //decomposition tree
+    Node* root=new Node(nullptr, 0);
+    int coreValue=1;
+    std::fill_n(nodeContainingVertex, n, root);
+    // nodeContainingVertex[i] stores the pointer to the lowest tree node containing node i so far
+    while(numRemainingVertices > 0){
+        int numVerticesRemoved= findKcores(coreValue, nodeContainingVertex);
+        numRemainingVertices-=numVerticesRemoved; //TODO check for memory leak
+        findConnectedComponents(coreValue, nodeContainingVertex);
+        numRemainingVertices-=numVerticesRemoved; //TODO check for memory leak
+        coreValue++;
+    }
+    Tree* decompositionTree=new Tree(root);
+
+    return decompositionTree;
+}
+//TODO Update this method to accept a graph object as input, so that we can copy the original graph
+int Graph::findKcores(int k, Node** nodeContainingVertex) { //return is the number of removed vertices
+    // recursively find the vertices with degree less than k and deduct one from their degrees
+    int numVerticesRemoved=0;
+    std::queue<int> candidates;
+    bool *visited = new bool[n];
+    std::fill_n(visited, n, false);
+    // std::fill_n(isACandidate, n, false);
+   for(auto it= adj.begin(); it!= adj.end(); ++it){
+       if (it->second.size()<k){
+           candidates.push(it->first);
+       }
+   }
+    while(!candidates.empty()){
+        int u=candidates.front();
+        // we now remove u and all of its adjacent edges
+        visited[u]=true;
+        for (auto it=adj[u].begin(); it!= adj[u].end();++it){
+            adj[*it].erase(std::remove(adj[*it].begin(), adj[*it].end(), u), adj[*it].end()); // remove u from all adjacency lists of
+            //its neighbours
+            if(adj[*it].size() == k - 1){
+                candidates.push(*it);
+            }
+        }
+        candidates.pop();
+        //since we are about to erase u, we make u's node in the decomposition tree
+        Node* nodeVertex=new Node(nodeContainingVertex[u],  k-1, u);
+        nodeContainingVertex[u]=nodeVertex;
+        adj.erase(u);
+        numVerticesRemoved++;
+    }
+    return numVerticesRemoved;
+}
+void Graph::findConnectedComponents(int k, Node** nodeContainingVertex) {
+    // given an integer k, find the connected k-cores of the graph and put them in the degrees [] array
+    int component=1;
+    bool* visited=new bool[n];
+    std::fill_n(visited, n, false);
+    for (auto it=adj.begin(); it!=adj.end(); ++it ){ // TODO: change n to remaining vertices
+        int u= it->first;
+        if (!visited[u]){
+            // we are starting a new component, so we create its tree node
+            Node* componentNode= new Node(nodeContainingVertex[u], k);
+            DFS(u, k,  nodeContainingVertex, componentNode,  visited);
+            component++;
+        }
+    }
+}
+void Graph::DFS(int u, int k, Node** nodeContainingVertex, Node* componentNode, bool visited[]){
+    if(visited[u])
+        return;
+
+    visited[u]=true;
+    nodeContainingVertex[u]=componentNode;
+    for(auto it = adj[u].begin(); it != adj[u].end(); ++it){
+        int node = *it;
+        if (!visited[node]){
+            DFS(u, k,  nodeContainingVertex, componentNode,  visited);
+        }
+    }
 }
 
 

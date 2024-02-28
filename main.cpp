@@ -48,9 +48,10 @@ Graph *readFile(std::string fileName){
 
 int main(int argc, char *argv[]) {
     //dd_g138 dataset 102 vertices and 518 edges
-    // std::string filename = argv[0];
-    // std::cout<< "datasets/" + filename << std::endl;
+     std::string filename = argv[0];
+     std::cout<< "datasets/" + filename << std::endl;
     Graph *g = readFile("datasets/144.txt");
     std::cout<< "Graph created \n";
     g->coreDecomposition();
+
 }

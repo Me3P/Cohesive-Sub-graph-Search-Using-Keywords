@@ -12,6 +12,8 @@ class Node {
 public:
     int coreNumber;
     int vertexNumber;
+    static int idCounter;
+    int id;
     Node* parent;
     std::vector<Node*>parents;
     std::vector<Node *> children;
