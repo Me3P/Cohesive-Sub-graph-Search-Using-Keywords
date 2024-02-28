@@ -2,6 +2,7 @@
 #include <iostream>
 #include <climits>
 #include <map>
+#include "Node.h"
 
 #ifndef UNTITLED_GRAPH_H
 #define UNTITLED_GRAPH_H
@@ -20,7 +21,7 @@ public:
     void coreDecomposition();
     void findKcores(int, int[] );
     void findConnectedComponents( int , int [], int []);
-    Node* Graph::KCore(Graph &, int, int []);
+    Node* KCore(Graph &, int, int []);
     };
 
 
