@@ -11,7 +11,9 @@
 class Tree {
 public:
     Node * root;
+    std::vector<Node *> children;
     explicit Tree(Node *);
+    void addChild(Node *);
     void inOrder(Node *);
     void inOrder();
 };

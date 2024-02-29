@@ -22,6 +22,10 @@ Tree::Tree(Node * root) {
     this-> root=root;
 }
 
+void Tree::addChild(Node* child){
+    children.push_back(child);
+}
+
 void Tree::inOrder() {
     inOrder(root);
 }
