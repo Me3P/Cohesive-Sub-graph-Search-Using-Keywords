@@ -11,6 +11,8 @@
 #include <string>
 #include <sstream>
 
+#include <sys/resource.h>
+
 
 Graph *readFile(std::string fileName){
     std::fstream file(fileName); // the text file containing the graph information
@@ -46,7 +48,25 @@ Graph *readFile(std::string fileName){
     return g;
 }
 
+int setStackLimit(){
+    const rlim_t kStackSize = 64 * 1024 * 1024; // 16 MB stack size limit, you can adjust this as needed
+
+    struct rlimit rl;
+    if (getrlimit(RLIMIT_STACK, &rl) == 0) {
+        if (rl.rlim_cur < kStackSize) {
+            rl.rlim_cur = kStackSize;
+            if (setrlimit(RLIMIT_STACK, &rl) != 0) {
+                std::cerr << "Failed to set stack size limit." << std::endl;
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
 int main(int argc, char *argv[]) {
+    int succ = setStackLimit();
+    if (succ == 1) return 1;
     //dd_g138 dataset 102 vertices and 518 edges
      std::string filename = argv[1];
     //  std::cout<< "datasets/" + filename << std::endl;
