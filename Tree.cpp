@@ -14,7 +14,6 @@ void Tree::inOrder(Node* u) {
         std::cout<<"vertex "<<u->vertexNumber<<" with core number "<<u->coreNumber<<std::endl;
     }
     else{
-        std::cout<<u->id<<std::endl;
     }
 
 }
