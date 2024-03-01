@@ -1,3 +1,15 @@
 #!/bin/bash
 make
-./output
+
+
+files='144.txt DD_g138.txt'
+for file in $files
+do
+    current=$(date +%s%N)
+    echo $file
+    ./output $file
+    after=$(date +%s%N)
+    time_diff=$(($after-$current))
+    echo $time_diff
+done
+
