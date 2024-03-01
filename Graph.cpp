@@ -232,8 +232,7 @@ Tree* Graph::coreDecomposition2() {
         std::cout<< " Coreness " << coreValue << " in progress .... \n";
         int numVerticesRemoved = findKcores(coreValue, nodeContainingVertex);
         numRemainingVertices -= numVerticesRemoved; //TODO check for memory leak
-        findConnectedComponents(coreValue, nodeContainingVertex);
-        // numRemainingVertices -= numVerticesRemoved; //TODO check for memory leak
+        findConnectedComponents(coreValue, nodeContainingVertex);//TODO check here
         coreValue++;
     }
     Tree* decompositionTree = new Tree(root); // TODO build the pointer to parent (baseline)
@@ -265,9 +264,9 @@ int Graph::findKcores(int k, Node** nodeContainingVertex) { //return is the numb
             }
         }
         candidates.pop();
-        // std::cout<< u << " Coreness: " << k << '\n';
+         std::cout<< u << " Coreness: " << k-1 << '\n';//TODO is coreness k or k-1?
         //since we are about to erase u, we make u's node in the decomposition tree
-        Node* nodeVertex = new Node(nodeContainingVertex[u],  k-1, u); //TODO is coreness k or k-1?
+        Node* nodeVertex = new Node(nodeContainingVertex[u],  k-1, u);
         nodeContainingVertex[u]=nodeVertex;
         adj.erase(u);
         numVerticesRemoved++;
