@@ -1,13 +1,13 @@
 //
-// Created by madan on 10/30/2023.
+// Created by Amirali on 10/30/2023.
 //
 
 #include "Tree.h"
 
-void Tree::inOrder(Node* u) {
+void Tree::eulerTour(Node* u) {
     if (u->children.size() !=0){
         for (auto const& v : u->children) {
-            inOrder(v);
+            eulerTour(v);
         }
     }
     if(u->vertexNumber!=-1){
@@ -18,14 +18,15 @@ void Tree::inOrder(Node* u) {
 
 }
 
-Tree::Tree(Node * root) {
+Tree::Tree(Node * root, int n) {
     this-> root=root;
+    this->numNodes=n;
 }
 
 void Tree::addChild(Node* child){
     children.push_back(child);
 }
 
-void Tree::inOrder() {
-    inOrder(root);
+void Tree::eulerTour() {
+    eulerTour(root);
 }

@@ -123,7 +123,7 @@ void Graph::coreDecomposition() {
         Node* NodeVertex= new Node(coreComponentInfo[coreInformation[coreness-1][i]], coreness, i);
     }
 
-    Tree decompositionTree(root);
+    Tree decompositionTree(root, Node::idCounter);
     delete [] coreInformation;
     delete [] coreComponentInfo;
 }
@@ -235,7 +235,7 @@ Tree* Graph::coreDecomposition2() {
         findConnectedComponents(coreValue, nodeContainingVertex);//TODO check here
         coreValue++;
     }
-    Tree* decompositionTree = new Tree(root); // TODO build the pointer to parent (baseline)
+    Tree* decompositionTree = new Tree(root, Node::idCounter); // TODO build the pointer to parent (baseline)
 
     return decompositionTree;
 }

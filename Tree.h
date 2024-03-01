@@ -11,11 +11,12 @@
 class Tree {
 public:
     Node * root;
+    int numNodes;
     std::vector<Node *> children;
-    explicit Tree(Node *);
+    explicit Tree(Node *, int);
     void addChild(Node *);
-    void inOrder(Node *);
-    void inOrder();
+    void eulerTour(Node *);
+    void eulerTour();
 };
 
 
