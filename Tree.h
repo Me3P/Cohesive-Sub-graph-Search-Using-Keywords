@@ -11,6 +11,7 @@
 class Tree {
 public:
     Node * root;
+    int * walkindex;
     int numNodes;
     std::vector<Node *> children;
     explicit Tree(Node *, int);
