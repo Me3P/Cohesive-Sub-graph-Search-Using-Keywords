@@ -1,4 +1,4 @@
-Decomposition Tree and Subgraph Searching using Keywords!
+Decomposition Tree and Cohesive Subgraph Search using Keywords!
 
 Keyword search has been widely studied to retrieve relevant substructures from graphs for a given set of keywords. 
 However, existing well-studied approaches aim at finding compact trees/subgraphs containing the keywords, and ignore a critical measure, density, to represent how strongly and stably the keyword nodes are connected in the substructure.
