@@ -5,17 +5,13 @@
 #include "Tree.h"
 
 void Tree::eulerTour(Node* u) {
+    std::cout<< u->id<<" ";
     if (u->children.size() !=0){
         for (auto const& v : u->children) {
             eulerTour(v);
+            std::cout<<u->id<<" ";
         }
     }
-    if(u->vertexNumber!=-1){
-        std::cout<<"vertex "<<u->vertexNumber<<" with core number "<<u->coreNumber<<std::endl;
-    }
-    else{
-    }
-
 }
 
 Tree::Tree(Node * root, int n) {
