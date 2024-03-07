@@ -38,6 +38,14 @@ void Node::createParentList(Node *  currentNode) {
     parents.push_back(currentNode);}
 }
 
+void Node::createParentList(){
+    Node* parent = this->parent;
+    while(parent != nullptr){
+        parents.push_back(parent);
+        parent = parent->parent;
+    }
+}
+
 
 
 

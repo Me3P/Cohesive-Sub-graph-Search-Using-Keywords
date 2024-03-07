@@ -23,6 +23,7 @@ public:
 
     void addChild(Node *);
     void createParentList(Node*);
+    void createParentList();
 };
 
 
