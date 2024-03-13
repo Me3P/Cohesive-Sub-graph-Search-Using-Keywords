@@ -73,5 +73,6 @@ int main(int argc, char *argv[]) {
     Graph *g = readFile("datasets/" + filename);
     std::cout<< "Graph created \n";
     g->coreDecomposition2();
+    std::cout << "Size of the tree in data set " << filename << " is :" << Node::idCounter << '\n';
 
 }
