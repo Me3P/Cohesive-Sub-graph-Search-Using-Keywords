@@ -268,7 +268,7 @@ int Graph::findKcores(int k, Node** nodeContainingVertex) { //return is the numb
         //since we are about to erase u, we make u's node in the decomposition tree
         Node* nodeVertex = new Node(nodeContainingVertex[u],  k-1, u);
         nodeContainingVertex[u]=nodeVertex;
-        // nodeVertex->createParentList();
+        nodeVertex->createParentList();
         adj.erase(u);
         numVerticesRemoved++;
     }
@@ -285,7 +285,7 @@ void Graph::findConnectedComponents(int k, Node** nodeContainingVertex) {
         if (!visited[u]){
             // we are starting a new component, so we create its tree node
             Node* componentNode = new Node(nodeContainingVertex[u], k);
-            // componentNode->createParentList();
+            componentNode->createParentList();
             DFS(u, k, nodeContainingVertex, componentNode, visited);
             component++;
         }

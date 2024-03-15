@@ -6,6 +6,7 @@
 #include "Graph.h"
 #include "Node.h"
 #include "Tree.h"
+#include "ThreadPool.h"
 #include <algorithm>
 #include <fstream>
 #include <string>
@@ -65,6 +66,9 @@ int setStackLimit(){
 }
 
 int main(int argc, char *argv[]) {
+    ThreadPool p;
+    p.run();
+
     int succ = setStackLimit();
     if (succ == 1) return 1;
     //dd_g138 dataset 102 vertices and 518 edges
