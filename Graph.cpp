@@ -17,6 +17,10 @@ Graph::Graph(int n)
     }
 }
 
+Graph::~Graph(){
+    this->adj.clear();
+}
+
 void Graph::addEdge(int u, int v)
 {
     adj[u].push_back(v);
@@ -236,7 +240,14 @@ Tree* Graph::coreDecomposition2() {
         coreValue++;
     }
     Tree* decompositionTree = new Tree(root, Node::idCounter); // TODO build the pointer to parent (baseline)
-
+    
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (nodeContainingVertex[i] != nullptr)
+    //         delete nodeContainingVertex[i];
+    // }
+    // delete[] nodeContainingVertex;
+    
     return decompositionTree;
 }
 //TODO Update this method to accept a graph object as input, so that we can copy the original graph

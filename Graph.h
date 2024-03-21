@@ -15,6 +15,7 @@ private:
 public:
     Graph();
     Graph(int);
+    ~Graph();
     void addEdge(int, int);
     void deleteVertex(int);
     void deleteEdge(int, int);

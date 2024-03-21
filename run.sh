@@ -1,8 +1,9 @@
 #!/bin/bash
 make
+mkdir logs
 
 
-files='144.txt DD_g138.txt MANN-a45.txt'
+files='144.txt DD_g138.txt'
 for file in $files
 do
     current=$(date +%s%N)
@@ -10,6 +11,6 @@ do
     ./output $file
     after=$(date +%s%N)
     time_diff=$(($after-$current))
-    echo $time_diff
+    echo $time_diff >> logs/$file
 done
 

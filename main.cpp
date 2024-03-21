@@ -10,6 +10,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <cstdlib>
 
 #include <sys/resource.h>
 
@@ -74,5 +75,8 @@ int main(int argc, char *argv[]) {
     std::cout<< "Graph created \n";
     g->coreDecomposition2();
     std::cout << "Size of the tree in data set " << filename << " is :" << Node::idCounter << '\n';
-
+    // delete g;
+    std::string command = "echo q | htop --filter=\"./output " + filename + "\" | aha --black --line-fix >  logs/" + filename + ".html";
+    system(command.c_str());
+    // std::cin.get();
 }
