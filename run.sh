@@ -3,14 +3,12 @@ make
 mkdir logs
 
 
-files='144.txt DD_g138.txt'
-for file in $files
-do
-    current=$(date +%s%N)
-    echo $file
-    ./output $file
-    after=$(date +%s%N)
-    time_diff=$(($after-$current))
-    echo $time_diff >> logs/$file
-done
+file=$1
+current=$(date +%s%N)
+echo $file
+./output $file
+after=$(date +%s%N)
+time_diff=$(($after-$current))
+echo $time_diff >> logs/$file
+
 
