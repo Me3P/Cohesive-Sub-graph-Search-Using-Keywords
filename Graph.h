@@ -29,7 +29,6 @@ public:
     void findConnectedComponents(int k, Node** nodeContainingVertex);
     void DFS(int u, int k, Node** nodeContainingVertex, Node* componentNode, bool visited[]);
     void findConnectedComponentsHeapRecursion(int k, Node** nodeContainingVertex);
-
 };
 
 

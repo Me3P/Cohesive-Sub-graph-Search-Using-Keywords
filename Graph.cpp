@@ -98,7 +98,6 @@ void Graph::coreDecomposition() {
                 Node* c= new Node(root, id, k);
                 id++;
                 coreComponentInfo[componentNumber + (k-1) * (maxComponentNumber+1)]=c;
-
                 }
             }
             else{
@@ -320,16 +319,25 @@ void Graph::DFS(int u, int k, Node** nodeContainingVertex, Node* componentNode, 
 void Graph::findConnectedComponentsHeapRecursion(int k, Node **nodeContainingVertex) {
     // given an integer k, find the connected k-cores of the graph and put them in the degrees [] array
     int component = 1;
+    std::vector<std::map<int,Node*>> recursionList;
     bool* visited = new bool[n];
     std::fill_n(visited, n, false);
     for (auto it = adj.begin(); it != adj.end(); ++it){ // TODO: change n to remaining vertices
         int u = it->first;
         if (!visited[u]){
+            std::map<int, Node *> recursionPair;// first int is the vertex number, the second is a pointer to node
             // we are starting a new component, so we create its tree node
             Node* componentNode = new Node(nodeContainingVertex[u], k);
-            // componentNode->createParentList();
-            DFS(u, k, nodeContainingVertex, componentNode, visited);
+            recursionPair[u]=componentNode;
+            recursionList.push_back(recursionPair);
             component++;
+        }
+        while(!recursionList.empty()){
+            std::map<int, Node *> currentPair= recursionList.back();
+            recursionList.pop_back();
+            int currentVertex;
+            Node* currentNode;
+
         }
     }
 }
