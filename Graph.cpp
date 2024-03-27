@@ -337,8 +337,25 @@ void Graph::findConnectedComponentsHeapRecursion(int k, Node **nodeContainingVer
             recursionList.pop_back();
             int currentVertex;
             Node* currentNode;
+            for (auto it: currentPair){
+                currentVertex=it.first;
+                currentNode=it.second;
+            }
+            if(visited[currentVertex])
+                continue;
 
-        }
+            visited[currentVertex] = true;
+            nodeContainingVertex[currentVertex] = currentNode;
+            for(auto it = adj[currentVertex].begin(); it != adj[currentVertex].end(); ++it){
+                int node = *it;
+                if (!visited[node]){
+                    std::map<int, Node *> newRecursionPair;// first int is the vertex number, the second is a pointer to node
+                    newRecursionPair[node]=currentNode;
+                    recursionList.push_back((newRecursionPair));
+
+                }
+            }
+        }// end of while
     }
 }
 
