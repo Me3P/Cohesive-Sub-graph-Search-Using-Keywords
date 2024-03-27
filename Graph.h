@@ -13,6 +13,7 @@ private:
     int n;
     std::map<int, std::vector<int>> adj; // the adjacency matrix
 public:
+    static long long int totalCores;
     Graph();
     Graph(int);
     ~Graph();

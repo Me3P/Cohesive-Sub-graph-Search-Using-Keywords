@@ -7,6 +7,7 @@
 #include <list>
 #include <queue>
 #include<algorithm>
+long long int Graph::totalCores=0;
 
 Graph::Graph(int n)
 {
@@ -275,7 +276,8 @@ int Graph::findKcores(int k, Node** nodeContainingVertex) { //return is the numb
             }
         }
         candidates.pop();
-         std::cout<< u << " Coreness: " << k-1 << '\n';//TODO is coreness k or k-1?
+        Graph::totalCores += k-1;
+        //  std::cout<< u << " Coreness: " << k-1 << '\n';//TODO is coreness k or k-1?
         //since we are about to erase u, we make u's node in the decomposition tree
         Node* nodeVertex = new Node(nodeContainingVertex[u],  k-1, u);
         nodeContainingVertex[u]=nodeVertex;

@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     Graph *g = readFile("datasets/" + filename);
     std::cout<< "Graph created \n";
     g->coreDecomposition2();
-    std::cout << "Size of the tree in data set " << filename << " is :" << Node::idCounter << '\n';
+    std::cout << "Size of the tree in data set " << filename << " is : " << Node::idCounter << " and total coreness is " << Graph::totalCores << '\n';
     // delete g;
     std::string command = "echo q | htop --filter=\"./output " + filename + "\" | aha --black --line-fix >  logs/" + filename + ".html";
     system(command.c_str());
