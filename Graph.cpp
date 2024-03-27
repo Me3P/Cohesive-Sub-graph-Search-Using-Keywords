@@ -317,4 +317,22 @@ void Graph::DFS(int u, int k, Node** nodeContainingVertex, Node* componentNode, 
     }
 }
 
+void Graph::findConnectedComponentsHeapRecursion(int k, Node **nodeContainingVertex) {
+    // given an integer k, find the connected k-cores of the graph and put them in the degrees [] array
+    int component = 1;
+    bool* visited = new bool[n];
+    std::fill_n(visited, n, false);
+    for (auto it = adj.begin(); it != adj.end(); ++it){ // TODO: change n to remaining vertices
+        int u = it->first;
+        if (!visited[u]){
+            // we are starting a new component, so we create its tree node
+            Node* componentNode = new Node(nodeContainingVertex[u], k);
+            // componentNode->createParentList();
+            DFS(u, k, nodeContainingVertex, componentNode, visited);
+            component++;
+        }
+    }
+}
+
+
 
