@@ -235,7 +235,8 @@ Tree* Graph::coreDecomposition2() {
         std::cout<< " Coreness " << coreValue << " in progress .... \n";
         int numVerticesRemoved = findKcores(coreValue, nodeContainingVertex);
         numRemainingVertices -= numVerticesRemoved; //TODO check for memory leak
-        findConnectedComponents(coreValue, nodeContainingVertex);//TODO check here
+        findConnectedComponentsHeapRecursion(coreValue, nodeContainingVertex);
+        // findConnectedComponents(coreValue, nodeContainingVertex);//TODO check here
         coreValue++;
     }
     Tree* decompositionTree = new Tree(root, Node::idCounter); // TODO build the pointer to parent (baseline)
@@ -319,28 +320,24 @@ void Graph::DFS(int u, int k, Node** nodeContainingVertex, Node* componentNode, 
 void Graph::findConnectedComponentsHeapRecursion(int k, Node **nodeContainingVertex) {
     // given an integer k, find the connected k-cores of the graph and put them in the degrees [] array
     int component = 1;
-    std::vector<std::map<int,Node*>> recursionList;
+    std::vector<std::pair<int,Node*>> recursionList;
     bool* visited = new bool[n];
     std::fill_n(visited, n, false);
     for (auto it = adj.begin(); it != adj.end(); ++it){ // TODO: change n to remaining vertices
         int u = it->first;
         if (!visited[u]){
-            std::map<int, Node *> recursionPair;// first int is the vertex number, the second is a pointer to node
             // we are starting a new component, so we create its tree node
             Node* componentNode = new Node(nodeContainingVertex[u], k);
-            recursionPair[u]=componentNode;
-            recursionList.push_back(recursionPair);
+            // std::pair<int, Node *> recursionPair = {u, componentNode};// first int is the vertex number, the second is a pointer to node
+            recursionList.push_back({u, componentNode});
             component++;
         }
         while(!recursionList.empty()){
-            std::map<int, Node *> currentPair= recursionList.back();
+            std::pair<int, Node *> currentPair= recursionList.back();
             recursionList.pop_back();
-            int currentVertex;
-            Node* currentNode;
-            for (auto it: currentPair){
-                currentVertex=it.first;
-                currentNode=it.second;
-            }
+            int currentVertex = currentPair.first;
+            Node* currentNode = currentPair.second;
+            
             if(visited[currentVertex])
                 continue;
 
@@ -349,10 +346,7 @@ void Graph::findConnectedComponentsHeapRecursion(int k, Node **nodeContainingVer
             for(auto it = adj[currentVertex].begin(); it != adj[currentVertex].end(); ++it){
                 int node = *it;
                 if (!visited[node]){
-                    std::map<int, Node *> newRecursionPair;// first int is the vertex number, the second is a pointer to node
-                    newRecursionPair[node]=currentNode;
-                    recursionList.push_back((newRecursionPair));
-
+                    recursionList.push_back({node, currentNode});
                 }
             }
         }// end of while
