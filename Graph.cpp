@@ -355,7 +355,7 @@ void Graph::findConnectedComponentsHeapRecursion(int k, Node **nodeContainingVer
     }
 }
 
-void Graph::calculateCorenessvalues() {
+void Graph::calculateCorenessValues() {
     int* degrees= new int[n];
     bool* deleted=new bool[n];
     int * corenessValues=new int[n];
@@ -395,6 +395,11 @@ void Graph::calculateCorenessvalues() {
                 degreeBuckets[affectedChildDegree-1].push_back(affectedChild);
             }
          }
+        j=0;
+        while(degreeBuckets[j].size()!=0){
+            j++;
+        }
+        currentMinDegree=j;
 
 
 
