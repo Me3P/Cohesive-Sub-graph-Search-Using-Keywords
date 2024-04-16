@@ -388,9 +388,12 @@ void Graph::calculateCorenessvalues() {
             int affectedChild = *it;
             if(!deleted[affectedChild]){
                 int affectedChildDegree= degrees[affectedChild];
-
+                std::vector<int>::iterator position = std::find(degreeBuckets[affectedChildDegree].begin(), degreeBuckets[affectedChildDegree].end(), affectedChild);
+                if (position != degreeBuckets[affectedChildDegree].end()) // == myVector.end() means the element was not found
+                    degreeBuckets[affectedChildDegree].erase(position);
+                degrees[affectedChild]--;
+                degreeBuckets[affectedChildDegree-1].push_back(affectedChild);
             }
-
          }
 
 
