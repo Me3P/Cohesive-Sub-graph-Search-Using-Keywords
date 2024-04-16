@@ -372,7 +372,7 @@ void Graph::calculateCorenessvalues() {
     currentMinDegree=j;
     int maxMinDegree=-1;
     for(int i=0; i<n; i++){
-         int removedVertex=degreeBuckets[]
+         int removedVertex=degreeBuckets[]d
     }
 
 }

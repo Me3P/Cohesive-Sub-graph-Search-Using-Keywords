@@ -12,6 +12,8 @@ class Graph {
 private:
     int n;
     std::map<int, std::vector<int>> adj; // the adjacency matrix
+    int maxDegree;
+    int*coreness;
 public:
     static long long int totalCores;
     Graph();
@@ -30,6 +32,7 @@ public:
     void findConnectedComponents(int k, Node** nodeContainingVertex);
     void DFS(int u, int k, Node** nodeContainingVertex, Node* componentNode, bool visited[]);
     void findConnectedComponentsHeapRecursion(int k, Node** nodeContainingVertex);
+    void calculateCorenessvalues();
 };
 
 
