@@ -356,11 +356,15 @@ void Graph::findConnectedComponentsHeapRecursion(int k, Node **nodeContainingVer
 }
 
 void Graph::calculateCorenessvalues() {
-    int maxDegree = 0;
+    int* degrees= new int[n];
+    bool* deleted=new bool[n];
+    int * corenessValues=new int[n];
     std::vector<int> *degreeBuckets;
 
     for (int i = 0; i < n; i++) {
         int degree= adj[i].size();
+        degrees[i]=degree;
+        deleted[i]= false;
         degreeBuckets[degree].push_back(i);
     }
     maxDegree=degreeBuckets->size();
@@ -372,9 +376,29 @@ void Graph::calculateCorenessvalues() {
     currentMinDegree=j;
     int maxMinDegree=-1;
     for(int i=0; i<n; i++){
-         int removedVertex=degreeBuckets[]d
+         int removedVertex=degreeBuckets[currentMinDegree].front();
+         // we delete the vertex now
+         maxMinDegree=std::max(maxMinDegree, currentMinDegree);
+         corenessValues[removedVertex]=maxMinDegree;
+         std::vector<int>::iterator position = std::find(degreeBuckets[currentMinDegree].begin(), degreeBuckets[currentMinDegree].end(), removedVertex);
+         if (position != degreeBuckets[currentMinDegree].end()) // == myVector.end() means the element was not found
+              degreeBuckets[currentMinDegree].erase(position);
+         deleted[removedVertex]=true;
+         for(auto it = adj[removedVertex].begin(); it != adj[removedVertex].end(); ++it){
+            int affectedChild = *it;
+            if(!deleted[affectedChild]){
+                int affectedChildDegree= degrees[affectedChild];
+
+            }
+
+         }
+
+
+
+
     }
 
-}
+
+    }
 
 
