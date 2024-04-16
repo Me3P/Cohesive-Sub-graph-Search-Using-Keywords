@@ -355,5 +355,26 @@ void Graph::findConnectedComponentsHeapRecursion(int k, Node **nodeContainingVer
     }
 }
 
+void Graph::calculateCorenessvalues() {
+    int maxDegree = 0;
+    std::vector<int> *degreeBuckets;
+
+    for (int i = 0; i < n; i++) {
+        int degree= adj[i].size();
+        degreeBuckets[degree].push_back(i);
+    }
+    maxDegree=degreeBuckets->size();
+    int currentMinDegree=0;
+    int j=0;
+    while(degreeBuckets[j].size()!=0){
+        j++;
+    }
+    currentMinDegree=j;
+    int maxMinDegree=-1;
+    for(int i=0; i<n; i++){
+         int removedVertex=degreeBuckets[]
+    }
+
+}
 
 
