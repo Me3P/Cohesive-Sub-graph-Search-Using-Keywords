@@ -12,6 +12,7 @@ long long int Graph::totalCores=0;
 Graph::Graph(int n)
 {
     this->n = n;
+    this->maxDegree=0;
     for (int i = 0; i < n; i++){
         std::vector<int> v;
         this->adj[i] = v;
@@ -26,6 +27,8 @@ void Graph::addEdge(int u, int v)
 {
     adj[u].push_back(v);
     adj[v].push_back(u);
+    int temp=std::max(adj[u].size(), adj[v].size());
+    maxDegree=std::max(maxDegree, temp);
 }
 //a special DFS to find the connected k cores of a graphs, where every edge is traveresed iff both endpoints have core number
 // at least k
@@ -359,29 +362,28 @@ void Graph::calculateCorenessValues() {
     int* degrees= new int[n];
     bool* deleted=new bool[n];
     int * corenessValues=new int[n];
-    std::vector<int> *degreeBuckets;
-
+    std::vector<int> *degreeBuckets=new std::vector<int>[maxDegree+1];
     for (int i = 0; i < n; i++) {
         int degree= adj[i].size();
         degrees[i]=degree;
         deleted[i]= false;
         degreeBuckets[degree].push_back(i);
+
     }
-    maxDegree=degreeBuckets->size();
     int currentMinDegree=0;
     int j=0;
-    while(degreeBuckets[j].size()!=0){
+    while(degreeBuckets[j].size()==0){
         j++;
     }
     currentMinDegree=j;
     int maxMinDegree=-1;
     for(int i=0; i<n; i++){
-         int removedVertex=degreeBuckets[currentMinDegree].front();
+        int removedVertex=degreeBuckets[currentMinDegree].front();
          // we delete the vertex now
          maxMinDegree=std::max(maxMinDegree, currentMinDegree);
          corenessValues[removedVertex]=maxMinDegree;
          std::vector<int>::iterator position = std::find(degreeBuckets[currentMinDegree].begin(), degreeBuckets[currentMinDegree].end(), removedVertex);
-         if (position != degreeBuckets[currentMinDegree].end()) // == myVector.end() means the element was not found
+         if (position != degreeBuckets[currentMinDegree].end()) // == vec.end() means the element was not found
               degreeBuckets[currentMinDegree].erase(position);
          deleted[removedVertex]=true;
          for(auto it = adj[removedVertex].begin(); it != adj[removedVertex].end(); ++it){
@@ -389,23 +391,23 @@ void Graph::calculateCorenessValues() {
             if(!deleted[affectedChild]){
                 int affectedChildDegree= degrees[affectedChild];
                 std::vector<int>::iterator position = std::find(degreeBuckets[affectedChildDegree].begin(), degreeBuckets[affectedChildDegree].end(), affectedChild);
-                if (position != degreeBuckets[affectedChildDegree].end()) // == myVector.end() means the element was not found
+                if (position != degreeBuckets[affectedChildDegree].end()) // == vec.end() means the element was not found
                     degreeBuckets[affectedChildDegree].erase(position);
                 degrees[affectedChild]--;
                 degreeBuckets[affectedChildDegree-1].push_back(affectedChild);
             }
          }
-        j=0;
-        while(degreeBuckets[j].size()!=0){
+
+        j=currentMinDegree-1;
+        while(degreeBuckets[j].size()==0){
             j++;
         }
         currentMinDegree=j;
-
-
-
-
     }
-
+    std::cout<<"the coreness values are:"<<std::endl;
+for(int i=0; i<n; i++){
+    std::cout<<i<<": "<<corenessValues[i]<<std::endl;
+}
 
     }
 
