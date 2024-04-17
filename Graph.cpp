@@ -363,6 +363,7 @@ void Graph::calculateCorenessValues() {
     bool* deleted=new bool[n];
     int * corenessValues=new int[n];
     std::vector<int> *degreeBuckets=new std::vector<int>[maxDegree+1];
+    std::cout<<maxDegree<<"\n";
     for (int i = 0; i < n; i++) {
         int degree= adj[i].size();
         degrees[i]=degree;
@@ -370,6 +371,7 @@ void Graph::calculateCorenessValues() {
         degreeBuckets[degree].push_back(i);
 
     }
+
     int currentMinDegree=0;
     int j=0;
     while(degreeBuckets[j].size()==0){
@@ -379,16 +381,16 @@ void Graph::calculateCorenessValues() {
     int maxMinDegree=-1;
     for(int i=0; i<n; i++){
         int removedVertex=degreeBuckets[currentMinDegree].front();
-         // we delete the vertex now
+        // we delete the vertex now
          maxMinDegree=std::max(maxMinDegree, currentMinDegree);
          corenessValues[removedVertex]=maxMinDegree;
          std::vector<int>::iterator position = std::find(degreeBuckets[currentMinDegree].begin(), degreeBuckets[currentMinDegree].end(), removedVertex);
-         if (position != degreeBuckets[currentMinDegree].end()) // == vec.end() means the element was not found
-              degreeBuckets[currentMinDegree].erase(position);
-         deleted[removedVertex]=true;
-         for(auto it = adj[removedVertex].begin(); it != adj[removedVertex].end(); ++it){
+         if (position != degreeBuckets[currentMinDegree].end())
+             degreeBuckets[currentMinDegree].erase(position);
+        deleted[removedVertex]=true;
+        for(auto it = adj[removedVertex].begin(); it != adj[removedVertex].end(); ++it){
             int affectedChild = *it;
-            if(!deleted[affectedChild]){
+             if(!deleted[affectedChild]){
                 int affectedChildDegree= degrees[affectedChild];
                 std::vector<int>::iterator position = std::find(degreeBuckets[affectedChildDegree].begin(), degreeBuckets[affectedChildDegree].end(), affectedChild);
                 if (position != degreeBuckets[affectedChildDegree].end()) // == vec.end() means the element was not found
@@ -397,10 +399,12 @@ void Graph::calculateCorenessValues() {
                 degreeBuckets[affectedChildDegree-1].push_back(affectedChild);
             }
          }
-
-        j=currentMinDegree-1;
+        j=std::max(currentMinDegree-1, 0);
         while(degreeBuckets[j].size()==0){
             j++;
+        }
+        if (j>maxDegree){// means the graph is empty
+            break;
         }
         currentMinDegree=j;
     }
